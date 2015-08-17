@@ -13,3 +13,9 @@ There is a search bar. If you type the start of a name in the search bar, the li
 the places that start with the typed letters.
 
 I hope you enjoy exploring this beautiful Scottish city.
+
+References:
+http://jshint.com/
+http://stackoverflow.com/
+https://developers.google.com/maps/
+https://instagram.com/developer/?hl=en
