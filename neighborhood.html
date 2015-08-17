@@ -1,0 +1,40 @@
+<html>
+    <head>
+       <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+         <link href="CSS/neighborhood.css" rel="stylesheet">
+
+        <!--<script src="https://maps.googleapis.com/maps/api/js"></script>-->
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+    </head>
+    <body>
+        <div id = container>
+        <h1> Kevin's Neighborhood Map</h1>
+        <div id="map-canvas"></div>
+        <div id = "list">
+            <h2>List of Awesome Places</h2>
+            <img class = "instagramIcon" src = "instagramIcon.png" alt = "Instagram Icon" data-bind= "click: openInstagram">
+            <input placeholder = "Search..." data-bind="value: filter, valueUpdate: 'afterkeydown'">
+            <!---<input placeholder="SearchÉ" type="search"  autocomplete="off">-->
+            <ul class = "nameplace" data-bind="foreach: filteredItems">
+            <h3 class = "thename" data-bind ="text: name, click: $parent.setPlace"></h2>
+            <h5 class = "thelist" data-bind ="text: hours"></h5>
+            <h5 class = "thelist" data-bind ="text: address"></h5>
+
+            </ul>
+        </div>
+        <div class= "photos">
+            <p class = "closeInstagram" data-bind= "click: closeInstagram">X</p>
+            <h1 class="photoTitle" id="locationName" data-bind="text: currentLocation">
+            </h1>
+              <div id="photos" class="insta">
+              </div>
+        </div>
+         </div>
+        <script src = "JS/knockout330.js"> </script>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src = "JS/neighborhood1.js"> </script>
+
+    </body>
+</html>
