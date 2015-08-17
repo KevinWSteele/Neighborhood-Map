@@ -5,7 +5,7 @@ var places = [
         hours: "8:00 am to 10:00 pm",
         address: "21 George IV Bridge",
         postcode: "EH1 1EN",
-        url: "elephanthouse.biz",
+        url: "http://www.elephanthouse.biz/",
         lat: "55.947617",
         lng: "-3.191880",
         instagramTag: "elephanthouse"
@@ -133,13 +133,18 @@ var viewModel = function(){
     //loop through arrayOfLocations to change infoWindow and add marker for each location in arrayOfLocations.
     var i;
     for (i = 0; i < places.length; i++) {
+
+        var streetViewUrl = 'http://maps.googleapis.com/maps/api/streetview?size=200x200&location=' +
+        self.placeList()[i].lat() + ','+ self.placeList()[i].lng();
+
         //Add content for infoWindow - this changes for each marker
         var contentString = '<div id="content">' +
             '<h3>' + self.placeList()[i].name() + '</h3>' +
             '<p>Address: ' + self.placeList()[i].address() + '</p>' +
             '<p>Postcode: ' + self.placeList()[i].postcode() + '</p>' +
             '<p>Hours: ' + self.placeList()[i].hours() + '</p>' +
-            '<p>' + self.placeList()[i].url() + '</p>' +
+            '<a href = "' + self.placeList()[i].url() + '" target="_blank">Website</a>' +
+            '<img src = "' + streetViewUrl + '">' +
             '</div>';
         var infowindow = new google.maps.InfoWindow({content: contentString});
             //Add markers to map
@@ -167,11 +172,7 @@ var viewModel = function(){
             return function(){
                 infowindow.setContent(contentString);
                 infowindow.open(map,this);
-                //nameClicked = this.title;
                 self.currentLocation(this.title);
-                //self.loadInstram
-                //console.log(this.title);
-
                 marker.setIcon(image2);
                 self.getInstagram();
             };
