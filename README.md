@@ -1,5 +1,10 @@
 # Neighborhood-Map
 
+
+Please visit my GitHub page (https://github.com/KevinWSteele/Neighborhood-Map) and enjoy my site. 
+
+Click on index.html to launch the site in your browser.
+
 You can see markers pointing out some of my favorite places in Edinburgh.
 
 If you click on a marker, you will see some more information about the place as well as a link to the place's website.
