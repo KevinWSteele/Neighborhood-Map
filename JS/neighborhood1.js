@@ -75,6 +75,13 @@ var Location = function(data){
     this.instagramTag = ko.observable(data.instagramTag);
 };
 
+/*var Marker = function(data){
+    this.position = ko.observable(data.position);
+    this.map = ko.observable(data.map);
+    this.title =  ko.observable(data.title);
+    this.icon = ko.observable(data.icon);
+};*/
+
 //load google maps
 function loadScript() {
     var script = document.createElement('script');
@@ -101,7 +108,8 @@ var viewModel = function(){
   var image2 = 'marker_red.png';  //selected marker
 
   this.placeList = ko.observableArray([]);
-  var markersArray = [];
+  //var markersArray = [];
+  this.markersArray = ko.observableArray([]);
 
   //variables for instagram
   var defaultName ="Edinburgh";
@@ -151,6 +159,12 @@ var viewModel = function(){
 
         var currentLatLng = new google.maps.LatLng(self.placeList()[i].lat(), self.placeList()[i].lng());
             //Create the marker
+        
+        /*this.marker = ko.observable(new google.maps.Marker({
+            position:this.currentLatLng(),
+            map: this.map,
+            title:this.name(),
+            icon:this.icon()}));*/
         var marker = new google.maps.Marker({
             position: currentLatLng,
             map: map,
@@ -158,9 +172,13 @@ var viewModel = function(){
             icon: image
         });
 
+        /*places.forEach(function(placeItem){
+    self.placeList.push(new Location(placeItem));
+  });*/
 
         //Push each marker into arrayOfMarkers
-        markersArray.push(marker);
+        self.markersArray.push(marker);
+        //console.log(self.markersArray()[0].marker().title);
 
 
         //Draw the marker on the map
@@ -232,7 +250,7 @@ var viewModel = function(){
 
   var reset = function(){
             for (var c = 0; c < places.length; c++){
-                markersArray[c].setIcon(image);
+                self.markersArray()[c].setIcon(image);
             }
         };
 
@@ -252,7 +270,8 @@ var viewModel = function(){
 
         if (nameClicked === self.placeList()[j].name()) {
 
-            this.currentMarker = markersArray[j];
+            this.currentMarker = self.markersArray()[j];
+            console.log(self.markersArray()[j].title);
             self.currentLocation(nameClicked);
             console.log(self.currentLocation);
             //reset();
@@ -277,17 +296,20 @@ var viewModel = function(){
         var filter = self.filter().toLowerCase();
         if (!filter) {
             return self.placeList();
+            //return self.markersArray();
         } else {
+    
             return ko.utils.arrayFilter(self.placeList(), function(Location) {
-                return self.stringStartsWith(Location.name().toLowerCase(), filter);
+                return self.stringStartsWith(Location.name().toLowerCase(), filter) ;
             });
+            
         }
     }, self.placeList);
 
 
-  places.forEach(function(locationItem){
+  /*places.forEach(function(locationItem){
     locations.push(new Location(locationItem));
-  });
+  });*/
 
   self.getInstagram();
   self.drawMap();

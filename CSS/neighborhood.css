@@ -1,6 +1,6 @@
 #map-canvas {
-  width: 100%;
-  height: 100%;
+  width: 90vw;
+  height: 90vh;
 }
 
 h1{
@@ -12,9 +12,8 @@ h1{
   position: absolute;
   top: 0;
   left: 0;
-  margin-top: 5%;
   z-index: 99;
-  width: 200px;
+  width: 20vw;
   height: 100%;
   background-color: white;
   opacity: .8;
