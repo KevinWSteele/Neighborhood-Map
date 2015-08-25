@@ -73,14 +73,8 @@ var Location = function(data){
     this.lat = ko.observable(data.lat);
     this.lng = ko.observable(data.lng);
     this.instagramTag = ko.observable(data.instagramTag);
+    this.marker = ko.observable(null);
 };
-
-/*var Marker = function(data){
-    this.position = ko.observable(data.position);
-    this.map = ko.observable(data.map);
-    this.title =  ko.observable(data.title);
-    this.icon = ko.observable(data.icon);
-};*/
 
 //load google maps
 function loadScript() {
@@ -108,8 +102,6 @@ var viewModel = function(){
   var image2 = 'marker_red.png';  //selected marker
 
   this.placeList = ko.observableArray([]);
-  //var markersArray = [];
-  this.markersArray = ko.observableArray([]);
 
   //variables for instagram
   var defaultName ="Edinburgh";
@@ -138,7 +130,7 @@ var viewModel = function(){
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    //loop through arrayOfLocations to change infoWindow and add marker for each location in arrayOfLocations.
+    //loop through places to change infoWindow and add marker for each location in places.
     var i;
     for (i = 0; i < places.length; i++) {
 
@@ -169,22 +161,16 @@ var viewModel = function(){
             position: currentLatLng,
             map: map,
             title: self.placeList()[i].name(),
-            icon: image
+            icon: image,
+            setVisible: false //needed for filtering
         });
+        self.placeList()[i].marker(marker);
+ 
+        //self.placeList()[i].marker().setVisible(false);
 
-        /*places.forEach(function(placeItem){
-    self.placeList.push(new Location(placeItem));
-  });*/
-
-        //Push each marker into arrayOfMarkers
-        self.markersArray.push(marker);
-        //console.log(self.markersArray()[0].marker().title);
-
-
-        //Draw the marker on the map
-        //marker.setMap(map);
-        google.maps.event.addListener(marker, "click", reset);
-        google.maps.event.addListener(infowindow, "closeclick", reset);
+        google.maps.event.addListener(self.placeList()[i].marker, "click", self.markerReset);
+        google.maps.event.addListener(infowindow, "closeclick", self.markerReset);
+    
 
          google.maps.event.addListener(marker, "click", (function(marker, contentString, infoWindow){
             return function(){
@@ -248,11 +234,13 @@ var viewModel = function(){
 
   };
 
-  var reset = function(){
-            for (var c = 0; c < places.length; c++){
-                self.markersArray()[c].setIcon(image);
-            }
-        };
+  //Reset marker colors back to unselected color
+  self.markerReset = function(){
+    for (var i = 0; i < self.placeList().length; i++){          
+      self.placeList()[i].marker().setIcon(image);
+    }
+  };
+ 
 
   //Remove photos from photopanel, so new photos can take their place.
   self.removePhotos = function(){
@@ -269,19 +257,15 @@ var viewModel = function(){
     for (var j = 0; j < places.length; j++){
 
         if (nameClicked === self.placeList()[j].name()) {
-
-            this.currentMarker = self.markersArray()[j];
-            console.log(self.markersArray()[j].title);
-            self.currentLocation(nameClicked);
-            console.log(self.currentLocation);
-            //reset();
-            google.maps.event.trigger(this.currentMarker, 'click');
+            console.log(self.placeList()[j].marker().title);
+            google.maps.event.trigger(self.placeList()[j].marker(), 'click');
 
         }
   }
   };
 
   self.filter = ko.observable('');
+
 
   //Needed for filter
   self.stringStartsWith = function (string, startsWith) {
@@ -294,23 +278,25 @@ var viewModel = function(){
     //Filter the items using the filter text
     self.filteredItems = ko.computed(function() {
         var filter = self.filter().toLowerCase();
-        if (!filter) {
-            return self.placeList();
-            //return self.markersArray();
-        } else {
-    
+        if (!filter) {  //no search term entered so show all markers
+            return self.placeList(); //nothing entered by user, so show entire list
+        } else { //a search term is entered
             return ko.utils.arrayFilter(self.placeList(), function(Location) {
                 return self.stringStartsWith(Location.name().toLowerCase(), filter) ;
-            });
-            
+            });           
         }
     }, self.placeList);
-
-
-  /*places.forEach(function(locationItem){
-    locations.push(new Location(locationItem));
-  });*/
-
+ 
+ 
+ 
+    /*self.displayMarkers = function() {
+      for (var i = 0; i < self.filteredItems().length; i++) {
+        self.filteredItems()[i].marker().setVisible(true);
+      };
+    };*/
+    
+    
+    
   self.getInstagram();
   self.drawMap();
 
