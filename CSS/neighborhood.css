@@ -1,14 +1,17 @@
-#map-canvas {
+.map-canvas {
   width: 90vw;
   height: 90vh;
 }
 
-h1{
-  color: #009999;
+h1 {
+  color: #099;
 }
 
-#list {
+h3 {
+  color: green;
+}
 
+.list {
   position: absolute;
   top: 0;
   left: 0;
@@ -22,13 +25,14 @@ h1{
   overflow: scroll;
 }
 
-#content {
+.content {
   width: 200px;
 }
 
 .thename{
   cursor:pointer;
 }
+
 .insta {
   z-index: 100;
   color: red;
@@ -55,8 +59,6 @@ h1{
   visibility: hidden;
   width: 70%
 }
-
-
 
 .instagramIcon{
   text-align: center;

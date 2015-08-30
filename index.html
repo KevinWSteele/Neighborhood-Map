@@ -8,13 +8,13 @@
     </head>
 
     <body>
-        <div id = container>
-        <div id="map-canvas"></div>
-        <div id = "list">
+        <div class = container>
+        <div class="map-canvas"></div>
+        <div class = "list">
             <h1> Kevin's Neighborhood Map</h1>
             <h2>List of Awesome Places</h2>
             <img class = "instagramIcon" src = "instagramIcon.png" alt = "Instagram Icon" data-bind= "click: openInstagram">
-            <input placeholder = "Search..." data-bind="value: filter, valueUpdate: 'afterkeydown'">
+            <br><input placeholder = "Search..." data-bind="value: filter, valueUpdate: 'afterkeydown'">
             <!---<input placeholder="SearchÉ" type="search"  autocomplete="off">-->
             <ul class = "nameplace" data-bind="foreach: filteredItems">
             <li><h3 class = "thename" data-bind ="text: name, click: $parent.setPlace"></h3></li>
@@ -32,8 +32,7 @@
         </div>
          </div>
         <script src = "JS/knockout330.js"> </script>
-         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src = "JS/neighborhood1.js"> </script>
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src = "JS/neighborhood7.js"> </script>
     </body>
 </html>
